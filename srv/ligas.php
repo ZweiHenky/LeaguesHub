@@ -18,12 +18,18 @@ ejecutaServicio(function () {
   $encodeId = urlencode($modelo[LIG_ID]);
   $id = htmlentities($encodeId);
   $nombre = htmlentities($modelo[LIG_NOMBRE]);
+  $descripcion = htmlentities($modelo[LIG_DESCRIPCION]);
   $render .=
-   "<li>
+   "<dt>
      <p>
       <a href='modifica.html?id=$id'>$nombre</a>
      </p>
-    </li>";
+    </dt>
+    <dd>
+      <p>
+        $descripcion
+      <p>
+    </dd>";
  }
 
  devuelveJson(["ligas" => ["innerHTML" => $render]]);
