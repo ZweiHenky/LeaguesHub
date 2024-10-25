@@ -1,0 +1,9 @@
+<?php
+
+const LIGAS = "LIGAS";
+const LIG_ID = "LIG_ID";
+const LIG_NOMBRE = "LIG_NOMBRE";
+const LIG_DESCRIPCION = "LIG_DESCRIPCION";
+const LIG_PREMIO = "LIG_PREMIO";
+const LIG_LOGO = "LIG_LOGO";
+const LIG_DIRECCION = "LIG_DIRECCION";
