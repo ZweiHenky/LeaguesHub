@@ -24,7 +24,7 @@ function recuperaImagen(string $parametro): false|string
 
             // Define la ruta base donde deseas guardar la imagen
             $nombreArchivo = basename($archivo['name']);
-            $rutaDestino = '../public/ligas/' . $nombreArchivo;
+            $rutaDestino = '../../public/ligas/' . $nombreArchivo;
 
             // Si el archivo ya existe, modifica el nombre
             $contador = 1; // Contador para el nuevo nombre
@@ -35,7 +35,7 @@ function recuperaImagen(string $parametro): false|string
                 $nuevoNombre = $nombreArchivoSinExt . '_' . $contador . '.' . $extension;
 
                 // Actualiza la ruta de destino con el nuevo nombre
-                $rutaDestino = '../public/ligas/' . $nuevoNombre;
+                $rutaDestino = '../../public/ligas/' . $nuevoNombre;
                 $contador++; // Incrementa el contador
             }
 
