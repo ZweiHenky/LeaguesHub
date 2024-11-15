@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modificar Liga</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script type="module" src="../../lib/js/consumeJson.js"></script>
+    <script type="module" src="../../lib/js/submitForm.js"></script>
+    <script type="module" src="../../lib/js/muestraObjeto.js"></script>
+    <script type="module" src="../../lib/js/muestraError.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+    <script>
+        // Obtiene los parámetros de la página.
+        const params = new URL(location.href).searchParams;
+    </script>
+</head>
+<body class="bg-gray-100 min-h-screen" onload="if (params.size > 0) {
+    consumeJson('../../srv/ligas/liga.php?' + params)
+     .then(respuesta => muestraObjeto(forma, respuesta.body))
+     .catch(muestraError)
+   }">
+    <div class="flex h-screen bg-gray-100">
+        <!-- Sidebar -->
+        <aside class="w-64 bg-white shadow-md">
+            <div class="p-6">
+                <h1 class="text-2xl font-bold text-gray-800">Admin Dashboard</h1>
+            </div>
+            <nav class="mt-6">
+                <a href="index.html" class="flex items-center py-3 px-6 text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition-colors duration-200">
+                    <i class="fas fa-home mr-3"></i>
+                    Inicio
+                </a>
+                <a href="#" class="flex items-center py-3 px-6 text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition-colors duration-200">
+                    <i class="fas fa-trophy mr-3"></i>
+                    Ligas
+                </a>
+                <a href="#" class="flex items-center py-3 px-6 text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition-colors duration-200">
+                    <i class="fas fa-users mr-3"></i>
+                    Usuarios
+                </a>
+                <a href="#" class="flex items-center py-3 px-6 text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition-colors duration-200">
+                    <i class="fas fa-cog mr-3"></i>
+                    Configuración
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main content -->
+        <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100">
+            <div class="container mx-auto px-6 py-8">
+                <div class="bg-white rounded-lg shadow-md p-8">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-6">Modificar Liga</h2>
+                    
+                    <form id="forma" class="space-y-6" onsubmit="submitForm('../../srv/ligas/liga-modifica.php', event)
+                        .then(respuesta => location.href = 'ligas.html')
+                        .catch(muestraError)">
+                        
+                        <input name="id" type="hidden">
+                        
+                        <div>
+                            <label for="nombre" class="block text-sm font-medium text-gray-700">Nombre *</label>
+                            <input type="text" name="nombre" id="nombre" value="Cargando..." required
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                        </div>
+                        
+                        <div>
+                            <label for="direccion" class="block text-sm font-medium text-gray-700">Dirección *</label>
+                            <input type="text" name="direccion" id="direccion" value="Cargando..." required
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                        </div>
+                        
+                        <div>
+                            <label for="descripcion" class="block text-sm font-medium text-gray-700">Descripción *</label>
+                            <textarea name="descripcion" id="descripcion" rows="3" required
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">Cargando...</textarea>
+                        </div>
+                        
+                        <div>
+                            <label for="premio" class="block text-sm font-medium text-gray-700">Premio *</label>
+                            <input type="text" name="premio" id="premio" value="Cargando..." required
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                        </div>
+                        
+                        <div>
+                            <label for="logo" class="block text-sm font-medium text-gray-700">Logo *</label>
+                            <img id="mostrarLogo" src="" alt="Logo de la liga" class="w-24 h-24 object-cover mb-2 rounded-md">
+                            <input type="file" name="logo" id="logo" accept="image/*"
+                                class="mt-1 block w-full text-sm text-gray-500
+                                file:mr-4 file:py-2 file:px-4
+                                file:rounded-full file:border-0
+                                file:text-sm file:font-semibold
+                                file:bg-blue-50 file:text-blue-700
+                                hover:file:bg-blue-100">
+                        </div>
+                        
+                        <p class="text-sm text-gray-500">* Obligatorio</p>
+                        
+                        <div class="flex space-x-4">
+                            <button type="submit"
+                                class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                                Guardar
+                            </button>
+                            
+                            <button type="button"
+                                class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+                                onclick="
+                                if (params.size > 0 && confirm('Confirma la eliminación')) {
+                                    consumeJson('../../srv/ligas/liga-elimina.php?' + params)
+                                    .then(() => location.href = 'ligas.html')
+                                    .catch(muestraError)
+                                }">
+                                Eliminar
+                            </button>
+                            
+                            <a href="ligas.html"
+                                class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
+                                Cancelar
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Script para mostrar la imagen seleccionada
+        document.getElementById('logo').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('mostrarLogo').src = e.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+</body>
+</html>
