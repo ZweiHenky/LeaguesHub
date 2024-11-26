@@ -5,10 +5,10 @@ require_once __DIR__ . "../../../lib/php/recuperaIdEntero.php";
 require_once __DIR__ . "../../../lib/php/delete.php";
 require_once __DIR__ . "../../../lib/php/devuelveNoContent.php";
 require_once __DIR__ . "../../Bd.php";
-require_once __DIR__ . "/TABLA_USUARIOS.php";
+require_once __DIR__ . "/TABLA_EQUIPOS.php";
 
 ejecutaServicio(function () {
  $id = recuperaIdEntero("id");
- delete(pdo: Bd::pdo(), from: USUARIO, where: [USU_ID => $id]);
+ delete(pdo: Bd::pdo(), from: EQUIPOS, where: [EQI_ID => $id]);
  devuelveNoContent();
 });

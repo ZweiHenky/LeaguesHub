@@ -21,6 +21,8 @@ ejecutaServicio(function () {
  $pass = recuperaTexto("password");
  $rolIds = recuperaArray("rolIds");
 
+ 
+
  $nombre = validaNombre($nombre);
 
  $pdo = Bd::pdo();

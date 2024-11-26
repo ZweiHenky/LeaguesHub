@@ -3,6 +3,9 @@
 require_once __DIR__ . "/../lib/php/selectFirst.php";
 require_once __DIR__ . "/../lib/php/insert.php";
 require_once __DIR__ . "/usuarios/TABLA_ROLS.php";
+require_once __DIR__ . "/usuarios/TABLA_USUARIOS.php";
+require_once __DIR__ . "/usuarios/TABLA_USUARIO_ROL.php";
+require_once __DIR__ . "/../lib/php/insertBridges.php";
 
 class Bd
 {
@@ -27,18 +30,35 @@ class Bd
     'CREATE TABLE IF NOT EXISTS USUARIO (
       USU_ID INTEGER,
       USU_NOM TEXT NOT NULL,
-      USU_LAST TEXT NOT NULL,
+      USU_LAST TEXT,
       USU_EMAIL TEXT NOT NULL,
-      USU_TEL TEXT NOT NULL,
+      USU_TEL ,
       USU_PASS TEXT NOT NULL,
       CONSTRAINT USU_PK
        PRIMARY KEY(USU_ID),
       CONSTRAINT USU_NOM_NV
-       CHECK(LENGTH(USU_NOM) > 0)
+       CHECK(LENGTH(USU_NOM) > 0),
       CONSTRAINT USU_NOM_UNIQ
-       UNIQUE(USU_EMAIL)
+       UNIQUE(USU_EMAIL),
       CONSTRAINT USU_TEL_UNIQ
-       UNIQUE(USU_TEL)
+       UNIQUE(USU_TEL),
+      CONSTRAINT USU_ID_FK
+       FOREIGN KEY (USU_ID) REFERENCES USUARIO(USU_ID)
+     )'
+   );
+
+  self::$pdo->exec(
+    'CREATE TABLE IF NOT EXISTS EQUIPOS (
+      EQI_ID INTEGER,
+      EQI_NOMBRE TEXT NOT NULL,
+      EQI_LOGO TEXT NOT NULL,
+      USU_ID INTEGER NOT NULL,
+      CONSTRAINT EQI_PK
+       PRIMARY KEY(EQI_ID),
+      CONSTRAINT EQI_NOMBRE_UNIQ
+       UNIQUE(EQI_NOMBRE),
+      CONSTRAINT EQI_NOMBRE_NV
+       CHECK(LENGTH(EQI_NOMBRE) > 0)
      )'
    );
 
@@ -88,6 +108,8 @@ class Bd
        FOREIGN KEY (ROL_ID) REFERENCES ROL(ROL_ID)
      )'
    );
+
+
    if (selectFirst(self::$pdo, ROL, [ROL_ID => "Administrador"]) === false) {
     insert(
      pdo: self::$pdo,
@@ -128,11 +150,26 @@ class Bd
      ]
     );
    }
-
-
-
-
   }
+
+  if (selectFirst(self::$pdo, USUARIO, [USU_EMAIL => "admin@gmail.com"]) === false) {
+    insert(
+     pdo: self::$pdo,
+     into: USUARIO,
+     values: [
+      USU_NOM => "admin",
+      USU_PASS => password_hash("admin", PASSWORD_DEFAULT),
+      USU_EMAIL => "admin@gmail.com"
+     ]
+    );
+    $usuId = self::$pdo->lastInsertId();
+    insertBridges(
+     pdo: self::$pdo,
+     into: USU_ROL,
+     valuesDePadre: [USU_ID => $usuId],
+     valueDeHijos: [ROL_ID => ["SuperAdmin"]]
+    );
+   }
 
   return self::$pdo;
  }

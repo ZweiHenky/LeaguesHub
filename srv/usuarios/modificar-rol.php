@@ -15,37 +15,27 @@ require_once __DIR__ . "/TABLA_USUARIO_ROL.php";
 
 ejecutaServicio(function () {
 
- $usuId = recuperaIdEntero("id");
- $correo = recuperaTexto("correo");
- $nombre = recuperaTexto("nombre");
- $apellido = recuperaTexto("apellido");
- $tel = recuperaTexto("tel");
-//  $password = recuperaTexto("password");
- $rolIds = recuperaArray("rolIds");
 
+ $correo = recuperaTexto("correo");
 
  $pdo = Bd::pdo();
  $pdo->beginTransaction();
 
- update(
-  pdo: $pdo,
-  table: USUARIO,
-  set: [USU_EMAIL => $correo, USU_NOM => $nombre, USU_LAST => $apellido, USU_TEL => $tel],
-  where: [USU_ID => $usuId]
- );
- delete(pdo: $pdo, from: USU_ROL, where: [USU_ID => $usuId]);
+ $modelo = selectFirst(pdo: $pdo, from: USUARIO, where: [USU_EMAIL => $correo]);
+
+ delete(pdo: $pdo, from: USU_ROL, where: [USU_ID => $modelo[USU_ID]]);
  insertBridges(
   pdo: $pdo,
   into: USU_ROL,
-  valuesDePadre: [USU_ID => $usuId],
-  valueDeHijos: [ROL_ID => $rolIds]
+  valuesDePadre: [USU_ID => $modelo[USU_ID]],
+  valueDeHijos: [ROL_ID => ["Capitan", "Administrador"]]
  );
 
  $pdo->commit();
 
  devuelveJson([
-  "id" => ["value" => $usuId],
+  "id" => ["value" => $modelo[USU_ID]],
   "correo" => ["value" => $correo],
-  "rolIds" => ["value" => $rolIds],
+  "rolIds" => ["value" => ["Capitan","Administrador"]],
  ]);
 });

@@ -2,6 +2,7 @@ import { htmlentities } from "../../../lib/js/htmlentities.js"
 import { Sesion } from "../Sesion.js"
 import { ROL_ID_ADMINISTRADOR } from "../ROL_ID_ADMINISTRADOR.js"
 import { ROL_ID_CAPITAN } from "../ROL_ID_CAPITAN.js"
+import { ROL_ID_SUPERADMIN } from "../ROL_ID_SUPERADMIN.js"
 
 export class MiNav extends HTMLElement {
 
@@ -25,10 +26,21 @@ export class MiNav extends HTMLElement {
   let innerHTML = this.createNavItem("../dashboard/inicio.html", "fas fa-home", "Inicio")
   innerHTML += this.hipervinculosAdmin(rolIds)
   innerHTML += this.hipervinculosCliente(rolIds)
+  innerHTML += this.hipervinculosSuperAdmin(rolIds)
   const correoHtml = htmlentities(correo)
   // if (correo !== "") {
   //  innerHTML += this.createNavItem("#", "fas fa-user", correoHtml)
   // }
+
+  console.log(rolIds);
+  
+
+  if (rolIds.has(ROL_ID_ADMINISTRADOR)) {
+    innerHTML += this.createNavItem("../admin/ligas.html", "fas fa-users-cog", "Ligas")
+  }else if(rolIds.has(ROL_ID_CAPITAN)){
+    innerHTML += this.createNavItem("../capitan/suscripcion.html", "fas fa-users-cog", "Ligas")
+  }
+
   innerHTML += this.createNavItem("../dashboard/perfil.html?correo=" + correo, "fas fa-trophy", "Perfil")
   innerHTML += this.createNavItem("#", "fas fa-cog", "Configuración")
   innerHTML += this.createNavItem("#", "fas fa-cog", "LogOut", `onclick="consumeJson('../../srv/auth/logout.php')
@@ -61,7 +73,6 @@ export class MiNav extends HTMLElement {
  hipervinculosAdmin(rolIds) {
   if (rolIds.has(ROL_ID_ADMINISTRADOR)) {
    return /* html */`
-    ${this.createNavItem("../admin/ligas.html", "fas fa-users-cog", "Ligas")}
     ${this.createNavItem("admin-usuarios.html", "fas fa-user-shield", "Albitros")}
    `
   }
@@ -71,10 +82,25 @@ export class MiNav extends HTMLElement {
  /**
   * @param {Set<string>} rolIds
   */
+ hipervinculosSuperAdmin(rolIds) {
+  if (rolIds.has(ROL_ID_SUPERADMIN)) {
+   return /* html */`
+    ${this.createNavItem("../super-admin/usuarios.html", "fas fa-user-shield", "Usuarios")}
+   `
+  }
+  return ""
+ }
+
+ /**
+  * @param {Set<string>} rolIds
+  */
  hipervinculosCliente(rolIds) {
-  return rolIds.has(ROL_ID_CAPITAN) ?
-   this.createNavItem("cliente.html", "fas fa-users", "Equipos")
-   : ""
+  if (rolIds.has(ROL_ID_CAPITAN)) {
+    return /* html */`
+     ${this.createNavItem("../capitan/equipos.html", "fas fa-users", "Equipos")}
+    `
+   }
+   return ""
  }
 }
 
