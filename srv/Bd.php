@@ -109,6 +109,23 @@ class Bd
      )'
    );
 
+   self::$pdo->exec(
+    'CREATE TABLE IF NOT EXISTS LIGA_EQUIPO (
+      LIG_ID INTEGER NOT NULL,
+      EQI_ID INTEGER NOT NULL,
+      EQI_NPAR INTEGER,
+      EQI_NGAN INTEGER,
+      EQI_NEMP INTEGER,
+      EQI_PUNTOS INTEGER,
+      CONSTRAINT LIG_EQI_PK
+       PRIMARY KEY(LIG_ID, EQI_ID),
+      CONSTRAINT LIG_EQI_LIG_FK
+       FOREIGN KEY (LIG_ID) REFERENCES USUARIO(LIG_ID),
+      CONSTRAINT LIG_EQI_EQI_FK
+       FOREIGN KEY (EQI_ID) REFERENCES ROL(EQI_ID)
+     )'
+   );
+
 
    if (selectFirst(self::$pdo, ROL, [ROL_ID => "Administrador"]) === false) {
     insert(
