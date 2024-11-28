@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+    <script type="module" src="../../lib/js/muestraError.js"></script>
+    <script type="module" src="../js/protege.js"></script>
+    <script type="module" src="../js/custom/mi-nav.js"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body onload="protege('../../srv/auth/sesion-actual.php')
+  .then(sesion => {
+    if (sesion.correo == '') {
+    location.href = '../auth/login.html'
+   }
+   nav.sesion = sesion
+  })
+  .catch(muestraError)">
+
+  <div class="flex h-screen bg-gray-100">
+          <!-- Sidebar -->
+          <aside class="w-64 bg-white shadow-md">
+            <div class="p-6">
+                <h1 class="text-2xl font-bold text-gray-800">Capitan Dashboard</h1>
+            </div>
+            <mi-nav id="nav"></mi-nav>
+        </aside>
+    
+        <!-- Main content -->
+        <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 flex items-center justify-center">
+            <div class="bg-white p-8 rounded-lg shadow-md max-w-md w-full">
+                <h2 class="text-2xl font-bold text-center mb-4">Suscríbete Ahora</h2>
+                <p class="text-center mb-4">Obtén acceso a características premium y soporte</p>
+                <p class="text-center mb-6">
+                    Suscríbete a nuestro Plan Premium y disfruta de beneficios exclusivos:
+                </p>
+                <ul class="list-disc list-inside mb-6 text-sm">
+                    <li>Análisis avanzados</li>
+                    <li>Soporte al cliente prioritario</li>
+                    <li>Herramientas de informes personalizados</li>
+                    <li>Miembros de equipo ilimitados</li>
+                </ul>
+                <p class="font-bold text-lg text-center mb-6">Solo $19.99/mes</p>
+                <script async
+                src="https://js.stripe.com/v3/buy-button.js">
+              </script>
+              
+              <stripe-buy-button class=" flex items-center justify-center"
+                buy-button-id="buy_btn_1QPKAyP9Ot3ecyAmg0keMGwL"
+                publishable-key="pk_live_51P0IeWP9Ot3ecyAmM8aFo4FRFNWP2vI1b837qcrugt3JMYVyPipSl6AmqrSlOf69oJveq7sXTWViB8UD6mfrSjNK006ABwr7RO"
+              >
+              </stripe-buy-button>
+            
+            </div>
+        </main>
+  </div>
+
+  <script>
+    function handleSubscribe() {
+      // Añade aquí la lógica de suscripción
+      console.log("Botón de suscripción clickeado");
+      // Puedes agregar aquí la lógica para procesar la suscripción
+    }
+  </script>
+
+</body>
+</html>

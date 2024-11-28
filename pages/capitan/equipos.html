@@ -28,10 +28,11 @@
     location.href = '../auth/login.html'
    }
    nav.sesion = sesion
-
    const correo = sesion.correo
+    // const inputCorreo = document.querySelector('#correo')
+    // inputCorreo.value = correo
 
-   const modelo = await consumeJson(`../../srv/ligas/ligas.php?correo=${correo}`)
+   const modelo = await consumeJson(`../../srv/equipos/equipos.php?correo=${correo}`)
 
     await muestraObjeto(document, modelo.body)
 
@@ -54,12 +55,12 @@
                 <!-- Leagues Section -->
                 <section id="leagues-section">
                     <div class="flex justify-between items-center mb-6">
-                        <h2 class="text-3xl font-bold text-gray-800">Ligas</h2>
+                        <h2 class="text-3xl font-bold text-gray-800">Equipos</h2>
                         <button id="create-league-btn" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition duration-300 shadow-lg hover:shadow-xl flex items-center">
-                            <i class="fas fa-plus mr-2"></i> Crear Liga
+                            <i class="fas fa-plus mr-2"></i> Crear Equipos
                         </button>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="leagues-grid">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="teams-grid">
                         <!-- Leagues will be dynamically inserted here -->
                     </div>
                 </section>
@@ -86,7 +87,7 @@
         });
 
         btnCreateLeague.addEventListener("click", ()=>{
-            location.href = "agrega.html"
+            location.href = "agregar-equipo.html"
         })
 
     </script>

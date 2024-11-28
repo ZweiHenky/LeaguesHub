@@ -43,7 +43,7 @@
         <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100">
             <div class="container mx-auto px-6 py-8">
                 <div class="bg-white rounded-lg shadow-md p-8">
-                    <h2 class="text-3xl font-bold text-gray-800 mb-6">Agregar Liga</h2>
+                    <h2 class="text-3xl font-bold text-gray-800 mb-6">Agregar Equipo</h2>
                     
                     <form id="forma" class="space-y-6" onsubmit="handleSubmit(event)">
                         <input type="email" name="correo" id="correo" required readonly
@@ -55,36 +55,18 @@
                         </div>
                         
                         <div>
-                            <label for="direccion" class="block text-sm font-medium text-gray-700">Dirección *</label>
-                            <input type="text" name="direccion" id="direccion" required
-                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
-                        </div>
-                        
-                        <div>
-                            <label for="descripcion" class="block text-sm font-medium text-gray-700">Descripción *</label>
-                            <textarea name="descripcion" id="descripcion" rows="3" required
-                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"></textarea>
-                        </div>
-                        
-                        <div>
-                            <label for="premio" class="block text-sm font-medium text-gray-700">Premio *</label>
-                            <input type="text" name="premio" id="premio" required
-                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
-                        </div>
-                        
-                        <div>
                             <label for="logo" class="block text-sm font-medium text-gray-700">Logo *</label>
                             <input type="file" name="logo" id="logo" required accept="image/*"
                             data-img="preview"
                             oninput="muestraImagenSeleccionada(forma, this).catch(muestraError)"
-                                class="mt-1 block w-full text-sm text-gray-500
-                                file:mr-4 file:py-2 file:px-4
-                                file:rounded-full file:border-0
-                                file:text-sm file:font-semibold
-                                file:bg-blue-50 file:text-blue-700
-                                hover:file:bg-blue-100">
+                            class="mt-1 block w-full text-sm text-gray-500
+                            file:mr-4 file:py-2 file:px-4
+                            file:rounded-full file:border-0
+                            file:text-sm file:font-semibold
+                            file:bg-blue-50 file:text-blue-700
+                            hover:file:bg-blue-100">
                         </div>
-                        
+
                         <figure>
                             <img id="preview" hidden alt="Imagen del producto" style="max-width: 100%;">
                         </figure>
@@ -95,7 +77,7 @@
                                 Agregar
                             </button>
                             
-                            <a href="ligas.html"
+                            <a href="equipos.html"
                                 class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
                                 Cancelar
                             </a>
@@ -113,10 +95,9 @@
 
         async function handleSubmit(e) {
             e.preventDefault();
-            console.log("dadas");
             
-            submitForm('../../srv/ligas/liga-agregar.php', e)
-                .then(modelo => location.href = 'ligas.html')
+            submitForm('../../srv/equipos/equipo-crear.php', e)
+                .then(modelo => location.href = 'equipos.html')
                 .catch(muestraError)
         }
 

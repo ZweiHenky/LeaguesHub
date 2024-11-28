@@ -10,7 +10,6 @@
     <script type="module" src="../../lib/js/submitForm.js"></script>
     <script type="module" src="../../lib/js/muestraObjeto.js"></script>
     <script type="module" src="../../lib/js/muestraError.js"></script>
-    <script type="module" src="../../lib/js/muestraImagenSeleccionada.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
         body {
@@ -23,7 +22,7 @@
     </script>
 </head>
 <body class="bg-gray-100 min-h-screen" onload="if (params.size > 0) {
-    consumeJson('../../srv/ligas/liga.php?' + params)
+    consumeJson('../../srv/equipos/equipo.php?' + params)
      .then(respuesta => muestraObjeto(forma, respuesta.body))
      .catch(muestraError)
    }">
@@ -59,8 +58,8 @@
                 <div class="bg-white rounded-lg shadow-md p-8">
                     <h2 class="text-3xl font-bold text-gray-800 mb-6">Modificar Liga</h2>
                     
-                    <form id="forma" class="space-y-6" onsubmit="submitForm('../../srv/ligas/liga-modifica.php', event)
-                        .then(respuesta => location.href = 'ligas.html')
+                    <form id="forma" class="space-y-6" onsubmit="submitForm('../../srv/equipos/equipo-modificar.php', event)
+                        .then(respuesta => location.href = 'equipos.html')
                         .catch(muestraError)">
                         
                         <input name="id" type="hidden">
@@ -68,24 +67,6 @@
                         <div>
                             <label for="nombre" class="block text-sm font-medium text-gray-700">Nombre *</label>
                             <input type="text" name="nombre" id="nombre" value="Cargando..." required
-                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
-                        </div>
-                        
-                        <div>
-                            <label for="direccion" class="block text-sm font-medium text-gray-700">Dirección *</label>
-                            <input type="text" name="direccion" id="direccion" value="Cargando..." required
-                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
-                        </div>
-                        
-                        <div>
-                            <label for="descripcion" class="block text-sm font-medium text-gray-700">Descripción *</label>
-                            <textarea name="descripcion" id="descripcion" rows="3" required
-                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">Cargando...</textarea>
-                        </div>
-                        
-                        <div>
-                            <label for="premio" class="block text-sm font-medium text-gray-700">Premio *</label>
-                            <input type="text" name="premio" id="premio" value="Cargando..." required
                                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
                         </div>
                         
@@ -111,14 +92,14 @@
                                 class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
                                 onclick="
                                 if (params.size > 0 && confirm('Confirma la eliminación')) {
-                                    consumeJson('../../srv/ligas/liga-elimina.php?' + params)
-                                    .then(() => location.href = 'ligas.html')
+                                    consumeJson('../../srv/equipos/equipo-eliminar.php?' + params)
+                                    .then(() => location.href = 'equipos.html')
                                     .catch(muestraError)
                                 }">
                                 Eliminar
                             </button>
                             
-                            <a href="ligas.html"
+                            <a href="equipos.html"
                                 class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
                                 Cancelar
                             </a>

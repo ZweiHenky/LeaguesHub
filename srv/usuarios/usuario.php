@@ -38,6 +38,7 @@ ejecutaServicio(function () {
    [":USU_ID" => $modelo[USU_ID]],
    PDO::FETCH_COLUMN
   );
+  
 
   devuelveJson([
    "id" => ["value" => $modelo[USU_ID]],
