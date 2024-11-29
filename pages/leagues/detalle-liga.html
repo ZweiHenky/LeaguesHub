@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles de la Liga</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script type="module" src="../../lib/js/consumeJson.js"></script>
+    <script type="module" src="../../lib/js/muestraObjeto.js"></script>
+    <script type="module" src="../../lib/js/muestraError.js"></script>
+    <script type="module" src="../../lib/js/submitForm.js"></script>
+    <script type="module" src="../js/protege.js"></script>
+    <script type="module" src="../js/custom/mi-nav.js"></script>
+    <script>
+        // Obtiene los parámetros de la página.
+        const params = new URL(location.href).searchParams;
+    </script>
+</head>
+<body class="min-h-screen bg-gray-100" onload="protege('../../srv/auth/sesion-actual.php')
+.then( async sesion => {
+  
+  if (sesion.correo == '') {
+
+  const dashboard = document.querySelector('.dashboard')
+  dashboard.style.display = 'none'
+  
+ }
+
+ const register = document.querySelector('.register')
+  const login = document.querySelector('.login')
+  const dashboard = document.querySelector('.dashboard')
+  dashboard.style.display = 'block'
+  register.style.display = 'none'
+  login.style.display = 'none'
+
+  const modelo = await consumeJson(`../../srv/liga-equipo/info-liga.php?` + params)
+
+  await muestraObjeto(document, modelo.body)
+
+ const modelo2 = await consumeJson(`../../srv/liga-equipo/detalle-liga.php?` + params)
+
+  await muestraObjeto(document, modelo2.body)
+
+})
+.catch(muestraError)">
+    <header class="bg-white fixed w-full z-10 top-0 shadow-md transition-all duration-300">
+        <nav class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <span class="text-2xl font-bold text-apple-blue">Ligas de Fútbol</span>
+                </div>
+                <div class="hidden md:flex space-x-6 items-center">
+                    <a href="/" class="text-gray-600 hover:text-apple-blue transition duration-300">Inicio</a>
+                    <a href="/pages/leagues/ligas.html" class="text-gray-600 hover:text-apple-blue transition duration-300">Ligas</a>
+                    <a href="/pages/auth/login.html" class="login text-sm px-4 py-2 rounded-full border border-gray-300 hover:border-apple-blue hover:text-apple-blue transition duration-300">Iniciar Sesión</a>
+                    <a href="/pages/auth/registro.html" class="register bg-apple-blue text-white text-sm px-6 py-3 rounded-full hover:bg-blue-600 transition duration-300 shadow-md hover:shadow-lg">Registro</a>
+                    <a href="../dashboard/inicio.html" class="dashboard bg-apple-blue text-white text-sm px-6 py-3 rounded-full hover:bg-blue-600 transition duration-300 shadow-md hover:shadow-lg">Dashboard</a>
+                </div>
+                <button id="menuButton" class="md:hidden text-gray-600 hover:text-apple-blue focus:outline-none transition duration-300" aria-label="Abrir menú">
+                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                    </svg>
+                </button>
+            </div>
+        </nav>
+        <!-- Menú móvil -->
+        <div id="mobileMenu" class="md:hidden hidden bg-white border-t border-gray-200">
+            <a href="/" class="block py-3 px-4 text-sm hover:bg-gray-100 transition duration-300">Inicio</a>
+            <a href="/pages/leagues/ligas.html" class="block py-3 px-4 text-sm hover:bg-gray-100 transition duration-300">Ligas</a>
+            <a href="/pages/auth/login.html" class="block py-3 px-4 text-sm hover:bg-gray-100 transition duration-300">Iniciar Sesión</a>
+            <a href="/pages/auth/registro.html" class="block py-3 px-4 text-sm bg-apple-blue text-white hover:bg-blue-600 transition duration-300">Registro</a>
+        </div>
+    </header>
+
+    <div class="max-w-6xl mx-auto p-8 mt-16" >
+        <div id="leagueDetails" class="bg-white rounded-2xl shadow-lg p-8 mb-8">
+            
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h2 class="text-2xl font-bold mb-4">Tabla de Posiciones</h2>
+                <div class="overflow-x-auto">
+                    <table id="tabla-general" class="w-full">
+
+                    </table>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h2 class="text-2xl font-bold mb-4">Próximos Partidos</h2>
+                <ul id="upcomingMatches" class="space-y-4">
+                    <!-- Upcoming matches will be dynamically inserted here -->
+                </ul>
+            </div>
+        </div>
+
+        <div class="mt-8 bg-white rounded-2xl shadow-lg p-8">
+            <h2 class="text-2xl font-bold mb-4">Estadísticas de la Liga</h2>
+            <div id="leagueStats" class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <!-- League stats will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Function to render upcoming matches
+        function renderUpcomingMatches() {
+            const matchesList = document.getElementById('upcomingMatches');
+            matchesList.innerHTML = upcomingMatches.map(match => `
+                <li class="flex justify-between items-center">
+                    <span>${match.home} vs ${match.away}</span>
+                    <span class="text-sm text-gray-600">${match.date} ${match.time}</span>
+                </li>
+            `).join('');
+        }
+
+        // Function to render league stats
+        function renderLeagueStats() {
+            const statsContainer = document.getElementById('leagueStats');
+            statsContainer.innerHTML = leagueStats.map(stat => `
+                <div class="text-center">
+                    <p class="text-sm text-gray-600">${stat.label}</p>
+                    <p class="font-semibold">${stat.value}</p>
+                </div>
+            `).join('');
+        }
+
+
+        renderLeagueTable();
+        renderUpcomingMatches();
+        renderLeagueStats();
+
+        // Mobile menu toggle
+        const menuButton = document.getElementById('menuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+        menuButton.addEventListener('click', function() {
+            mobileMenu.classList.toggle('hidden');
+            const icon = this.querySelector('i');
+            if (mobileMenu.classList.contains('hidden')) {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            } else {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            }
+        });
+    </script>
+</body>
+</html>

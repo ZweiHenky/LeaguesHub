@@ -39,7 +39,7 @@ ejecutaServicio(function () {
                         </div>
                     </div>
                     <div class='px-6 py-4 bg-gray-50'>
-                        <a href='./detalle-liga?id=$id'>
+                        <a href='./detalle-liga.html?id=$id'>
                         <button class='w-full bg-apple-blue hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-full transition duration-300 shadow-md hover:shadow-lg'>
                             Ver detalles
                         </button>

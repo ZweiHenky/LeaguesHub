@@ -19,6 +19,11 @@ ejecutaServicio(function () {
 
  $render = '';
  foreach ($lista as $modelo) {
+
+  if ($modelo[USU_EMAIL] == "admin@gmail.com") {
+    continue;
+  }
+
   $encodeId = urlencode($modelo[USU_ID]);
   $id = htmlentities($encodeId);
   $nombre = htmlentities($modelo[USU_NOM]);
@@ -47,8 +52,14 @@ ejecutaServicio(function () {
        <td class='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900'>$id</td>
        <td class='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>$nombre $apellido</td>
        <td class='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>$correo</td>
-       <td class='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>Admin</td>
+       <td class='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>" . implode(', ', $rolIds) . "</td>
        <td class='px-6 py-4 whitespace-nowrap text-right text-sm font-medium'>
+           <button class='bg-slate-500 hover:bg-slate-600 text-white font-bold py-2 px-4 rounded'
+               onclick=\"
+                   location.href = 'modifica.html?correo=$correo'
+               \">
+               Modificar
+           </button>
            <button class='bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded'
                onclick=\"
                    if (confirm('Confirma la eliminación')) {
@@ -62,6 +73,7 @@ ejecutaServicio(function () {
        </td>
    </tr>
    ";
+   
  }
 
  
