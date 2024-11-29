@@ -10,6 +10,7 @@ require_once __DIR__ . "../../../lib/php/recuperaTexto.php";
 
 ejecutaServicio(function () {
   
+//  $nombre = ucfirst(recuperaTexto("nombre"));
  $nombre = recuperaTexto("nombre");
  $idLiga = recuperaTexto("id");
   

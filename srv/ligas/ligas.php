@@ -31,13 +31,15 @@ ejecutaServicio(function () {
         </div>
         <div class='flex justify-end space-x-2'>
             <a href='agregar-equipo.html?id=$id'>
-              <button onclick='' class='bg-slate-900 hover:bg-slate-600 text-white font-bold py-2 px-4 rounded transition duration-300' onclick=''>
+              <button class='bg-slate-900 hover:bg-slate-600 text-white font-bold py-2 px-4 rounded transition duration-300' onclick=''>
                 <i class='fas fa-edit mr-2'></i>Agregar
               </button>
             </a>
-            <button onclick='' class='bg-slate-900 hover:bg-slate-600 text-white font-bold py-2 px-4 rounded transition duration-300' onclick=''>
-                <i class='fas fa-edit mr-2'></i>Jornada
-            </button>
+            <a href= 'crear-jornada.html?id=$id'>
+              <button class='bg-slate-900 hover:bg-slate-600 text-white font-bold py-2 px-4 rounded transition duration-300' onclick=''>
+                  <i class='fas fa-edit mr-2'></i>Jornada
+              </button>
+            </a>
           <a href='modifica.html?id=$id'>
             <button onclick='' class='bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded transition duration-300' onclick=''>
                 <i class='fas fa-edit mr-2'></i>Editar
